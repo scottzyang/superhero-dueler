@@ -26,7 +26,11 @@ class Team:
 
   def stats(self):
     for hero in self.heroes:
-      kd = hero.kills / hero.deaths
+      if hero.deaths == 0:
+        hero.deaths  = 1
+        kd = hero.kills / hero.deaths
+      else: 
+        kd = hero.kills / hero.deaths
       print(f"{hero.name} Kill/Deaths:{kd}")
 
   def revive_heroes(self, health=100):
@@ -45,19 +49,15 @@ class Team:
     for hero in other_team.heroes:
       living_opponents.append(hero)
 
-    while len(living_heroes) > 0 and len(living_opponents)> 0:
-      # TODO: Complete the following steps:
-      # 1) Randomly select a living hero from each team (hint: look up what random.choice does)
-      # 2) have the heroes fight each other (Hint: Use the fight method in the Hero class.)
-      # 3) update the list of living_heroes and living_opponents
-      # to reflect the result of the fight
+    while len(living_heroes) > 0 and len(living_opponents) > 0:
       champion1 = random.choice(living_heroes)
       champion2 = random.choice(living_opponents)
 
       winner = champion1.fight(champion2)
-      if winner.name == champion1.name:
+      if winner == champion1:
         living_opponents.remove(champion2)
-      elif winner.name == champion2.name:
+      elif winner == champion2:
         living_heroes.remove(champion1)
       else: 
         print(f'No winner!')
+        return

@@ -6,7 +6,7 @@ class Armor:
     self.max_block = max_block
 
   def block(self):
-    block_effect = random.randint(0, self.max_block)
+    block_effect = random.randint(0, int(self.max_block))
     return block_effect
 
 if __name__ == "__main__":
