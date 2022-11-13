@@ -24,6 +24,7 @@ class Team:
     for hero in self.heroes:
       print(hero.name)
 
+  # update KD stats and print per person
   def stats(self):
     for hero in self.heroes:
       if hero.deaths == 0:
@@ -37,6 +38,7 @@ class Team:
     for hero in self.heroes:
       hero.current_health = hero.starting_health
 
+  # team battle and update living heroes list
   def attack(self, other_team):
     ''' Battle each team against each other.'''
 

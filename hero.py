@@ -69,6 +69,7 @@ class Hero:
   def add_armor(self, armor):
     self.armors.append(armor)
 
+  # update current health based on defense and damage
   def defend(self, damage = 0):
     total_defense = 0
     if self.current_health == 0 or not self.armors:
@@ -77,6 +78,7 @@ class Hero:
       for armor in self.armors:
         total_defense += armor.block()
     
+    # if damage is less than defense, do nothing
     if damage < total_defense: 
       damage = 0
       return total_defense
