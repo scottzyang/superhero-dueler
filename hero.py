@@ -11,8 +11,14 @@ class Hero:
     self.current_health = starting_health
     # list() is a constructor that returns a list (if empty, returns empty list)
     self.abilities = list()
-    self.armors = list()
+    self.deaths = 0
+    self.kills = 0
 
+  def add_kill(self, num_kills):
+    self.kills += num_kills
+  
+  def add_death(self, num_deaths):
+    self.deaths += num_deaths
 
   def fight(self, opponent):
     if self.abilities or opponent.abilities:
@@ -28,10 +34,18 @@ class Hero:
 
         # conditions to run if one has died
         if self.is_alive() and not opponent.is_alive():
+          self.add_kill(1)
+          opponent.add_deaths(1)
           print(f'{self.name} wins the battle!')
         elif not self.is_alive() and opponent.is_alive():
+          opponent.add_kill(1)
+          self.add_death(1)
           print(f'{opponent.name} wins the battle!')
         elif not self.is_alive() and not opponent.is_alive(): 
+          opponent.add_death(1)
+          opponent.add_kill(1)
+          self.add_death(1)
+          self.add_kill(1)
           print(f'In a hard fought battle both {self.name} and {opponent.name} have lost!')
     else: 
       print(f'{self.name} and {opponent.name} could not defeat each other. It is a draw!')
