@@ -81,14 +81,7 @@ class Hero:
 # this block only runs if the script if called directly
 # allows us to test this logic infile, but won't run if imported to another file
 if __name__ == "__main__":
-    hero1 = Hero("Wonder Woman")
-    hero2 = Hero("Dumbledore")
-    ability1 = Ability("Super Speed", 30)
-    ability2 = Ability("Super Eyes", 130)
-    ability3 = Ability("Wizard Wand", 140)
-    ability4 = Ability("Wizard Beard", 20)
-    hero1.add_ability(ability1)
-    hero1.add_ability(ability2)
-    hero2.add_ability(ability3)
-    hero2.add_ability(ability4)
-    hero1.fight(hero2)
+    hero = Hero("Wonder Woman")
+    weapon = Weapon("Lasso of Truth", 90)
+    hero.add_weapon(weapon)
+    print(hero.attack())
