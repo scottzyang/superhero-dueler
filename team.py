@@ -20,3 +20,8 @@ class Team:
   def view_all_heroes(self):
     for hero in self.heroes:
       print(hero.name)
+
+  def stats(self):
+    for hero in self.heroes:
+      kd = hero.kills / hero.deaths
+      print(f"{hero.name} Kill/Deaths:{kd}")
