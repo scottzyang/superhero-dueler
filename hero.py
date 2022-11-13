@@ -14,15 +14,26 @@ class Hero:
 
 
   def fight(self, opponent):
-    self.fighters = [self.name, opponent.name]
-    # establish probability of winning based on health
-    total_health = self.current_health + opponent.current_health
-    hero1_probability = 100 * (self.current_health / total_health)
-    hero2_probability = 100 * (opponent.current_health / total_health)
+    if self.abilities or opponent.abilities:
+      # run while both opponents are alive
+      while self.is_alive() and opponent.is_alive():
+        # initialize attack values for hero and opponent
+        hero_attack = self.attack()
+        opponent_attack = opponent.attack()
+        
+        # pass attack return value as damage to hero and opponent
+        opponent.take_damage(hero_attack)
+        self.take_damage(opponent_attack)
 
-    # randomly select winner based on weighted probabilty
-    winner = random.choices(self.fighters, weights=(hero1_probability, hero2_probability), k=1)
-    print(f'{winner[0]} wins the fight!')
+        # conditions to run if one has died
+        if self.is_alive() and not opponent.is_alive():
+          print(f'{self.name} wins the battle!')
+        elif not self.is_alive() and opponent.is_alive():
+          print(f'{opponent.name} wins the battle!')
+        elif not self.is_alive() and not opponent.is_alive(): 
+          print(f'In a hard fought battle both {self.name} and {opponent.name} have lost!')
+    else: 
+      print(f'{self.name} and {opponent.name} could not defeat each other. It is a draw!')
 
   def add_ability(self, ability):
     self.abilities.append(ability)
@@ -55,13 +66,25 @@ class Hero:
 
   def take_damage(self, damage):
     self.current_health -=  self.defend(damage)
+  
+  def is_alive(self):
+    if self.current_health <= 0: 
+      return False
+    else:
+      return True
 
 
 # this block only runs if the script if called directly
 # allows us to test this logic infile, but won't run if imported to another file
 if __name__ == "__main__":
-  hero = Hero("Grace Hopper", 200)
-  shield = Armor("Shield", 100)
-  hero.add_armor(shield)
-  hero.take_damage(150)
-  print(hero.current_health)
+    hero1 = Hero("Wonder Woman")
+    hero2 = Hero("Dumbledore")
+    ability1 = Ability("Super Speed", 30)
+    ability2 = Ability("Super Eyes", 130)
+    ability3 = Ability("Wizard Wand", 140)
+    ability4 = Ability("Wizard Beard", 20)
+    hero1.add_ability(ability1)
+    hero1.add_ability(ability2)
+    hero2.add_ability(ability3)
+    hero2.add_ability(ability4)
+    hero1.fight(hero2)
