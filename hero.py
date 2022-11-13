@@ -38,7 +38,7 @@ class Hero:
   def add_armor(self, armor):
     self.armors.append(armor)
 
-  def defend(self):
+  def defend(self, damage):
     total_defense = 0
     if self.current_health == 0 or not self.armors:
       total_defense = 0
@@ -46,30 +46,22 @@ class Hero:
       for armor in self.armors:
         total_defense += armor.block()
     
-    return total_defense
-      
+    if damage < total_defense: 
+      damage = 0
+    else: 
+      damage -= total_defense
+    
+    return damage
+
+  def take_damage(self, damage):
+    self.current_health -=  self.defend(damage)
 
 
 # this block only runs if the script if called directly
 # allows us to test this logic infile, but won't run if imported to another file
 if __name__ == "__main__":
-  # my_hero = Hero("Grace Hopper", 600)
-  # print(my_hero.name)
-  # print(my_hero.current_health)
-  
-  # my_hero2 = Hero("Margaret Hamilton", 10)
-
-  # my_hero.fight(my_hero2)
-
-  ability = Ability("Great Debugging", 50)
-  another_ability = Ability("Smarty Pants", 90)
   hero = Hero("Grace Hopper", 200)
-  hero.add_ability(ability)
-  hero.add_ability(another_ability)
-  # print(hero.attack())
-
-  armor = Armor("Firewall", 60)
-  another_armor = Armor("Ad Blocker", 150)
-  hero.add_armor(armor)
-  hero.add_armor(another_armor)
-  print(hero.defend())
+  shield = Armor("Shield", 100)
+  hero.add_armor(shield)
+  hero.take_damage(150)
+  print(hero.current_health)
