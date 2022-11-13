@@ -2,6 +2,7 @@
 import random
 from ability import Ability
 from armor import Armor
+from weapon import Weapon
 
 class Hero:
   def __init__(self, name, starting_health=100):
@@ -63,6 +64,9 @@ class Hero:
       damage -= total_defense
     
     return damage
+
+  def add_weapon(self, weapon):
+    self.abilities.append(weapon)
 
   def take_damage(self, damage):
     self.current_health -=  self.defend(damage)
