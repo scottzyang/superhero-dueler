@@ -7,14 +7,14 @@ class Team:
     self.heroes = list()
 
   def remove_hero(self, name):
-    foundHero = False
+    found_hero = False
     # loop through each hero in our list
     for hero in self.heroes:
       if hero.name == name:
         self.heroes.remove(hero)
-        foundHero = True
+        found_hero = True
 
-    if not foundHero:
+    if not found_hero:
       return 0
   
   def add_hero(self, hero):
