@@ -20,7 +20,7 @@
 ## Features
 - Ability to create various customizable heroes with personalized names.
   - User can customize weapon, ability, and defense additions with varying max-range of effect.
-- Ability to add heroes to opposing teams
+- Ability to add heroes to opposing teams to duel. 
 - User inputted hero characteristics are utilized to determine the outcome of a duel.
   - If no abilities, weapons, or defenses are added the duel results in a draw.
   - Heros are randomly selected to deal first attack to ensure a fair duel.
