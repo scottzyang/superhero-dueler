@@ -25,34 +25,46 @@ class Hero:
     if self.abilities or opponent.abilities:
       # run while both opponents are alive
       while self.is_alive() and opponent.is_alive():
-        # initialize attack values for hero and opponent
+        # initialize attack/defend values for hero and opponent
         hero_attack = self.attack()
+        hero_defend = self.defend()
         opponent_attack = opponent.attack()
-        
-        # pass attack return value as damage to hero and opponent
-        opponent.take_damage(hero_attack)
-        self.take_damage(opponent_attack)
+        opponent_defend = opponent.defend()
 
-        # conditions to run if one has died
-        if self.is_alive() and not opponent.is_alive():
+        # randomize who goes first
+        first_attack = random.choice([self, opponent])  
+
+        # FIGHT ----------------------------------------------------------------------------
+        # first attack damage based on randomized choice, verify if alive
+        status = True
+        while status == True:
+          if first_attack == opponent:
+            self.take_damage(opponent_attack - hero_defend)
+            status = self.is_alive()
+            if status == True:
+              opponent.take_damage(hero_attack - opponent_defend)
+              status = opponent.is_alive()
+          elif first_attack == self: 
+            opponent.take_damage(hero_attack - opponent_defend)
+            status = opponent.is_alive()
+            if status == True:
+              self.take_damage(opponent_attack - hero_defend)
+              status = self.is_alive()
+        # ----------------------------------------------------------------------------------
+
+        # one has to die for above loop to end, verify which one did below
+        if self.is_alive():
           self.add_kill(1)
           opponent.add_death(1)
           print(f'{self.name} wins the battle!')
           return self
-        elif not self.is_alive() and opponent.is_alive():
+        else:
           opponent.add_kill(1)
           self.add_death(1)
           print(f'{opponent.name} wins the battle!')
           return opponent
-        elif not self.is_alive() and not opponent.is_alive(): 
-          opponent.add_death(1)
-          opponent.add_kill(1)
-          self.add_death(1)
-          self.add_kill(1)
-          print(f'In a hard fought battle both {self.name} and {opponent.name} have lost!')
-          return
     else: 
-      print(f'{self.name} and {opponent.name} could not defeat each other. It is a draw!')
+      print(f'With no abilities, {self.name} and {opponent.name} could not defeat each other. It is a draw!')
       return
 
   def add_ability(self, ability):
@@ -70,28 +82,25 @@ class Hero:
     self.armors.append(armor)
 
   # update current health based on defense and damage
-  def defend(self, damage = 0):
+  def defend(self):
     total_defense = 0
     if self.current_health == 0 or not self.armors:
       total_defense = 0
     else:
       for armor in self.armors:
         total_defense += armor.block()
-    
-    # if damage is less than defense, do nothing
-    if damage < total_defense: 
-      damage = 0
-      return total_defense
-    else: 
-      damage -= total_defense
-    
-    return damage
+
+    return total_defense
 
   def add_weapon(self, weapon):
     self.abilities.append(weapon)
 
   def take_damage(self, damage):
-    self.current_health -=  self.defend(damage)
+    # if damage is less than 0, do nothing
+    if damage < 0: 
+      damage = 0
+    else: 
+      self.current_health -= damage
   
   def is_alive(self):
     if self.current_health <= 0: 
