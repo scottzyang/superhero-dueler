@@ -89,6 +89,7 @@ class Arena:
         team_deaths = 1
     print(self.team_one.name + " average K/D was: " + str(team_kills/team_deaths))
 
+    # calculate average K/D for Team Two
     team_kills = 0
     team_deaths = 0
     survivors = list()

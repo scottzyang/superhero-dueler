@@ -61,7 +61,7 @@ class Hero:
         else:
           opponent.add_kill(1)
           self.add_death(1)
-          print(f'{opponent.name} used {(random.choice(opponent.abilities)).name} and it was effective against {self.name}! They win!')
+          print(f'{opponent.name} used {(random.choice(opponent.abilities)).name} and it was effective against {self.name}! They')
           return opponent
     else: 
       print(f'With no abilities, {self.name} and {opponent.name} could not defeat each other. It is a draw!')
