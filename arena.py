@@ -3,6 +3,7 @@ from weapon import Weapon
 from armor import Armor
 from hero import Hero
 from team import Team
+from colorama import Fore, Back, Style
 
 class Arena:
   def __init__(self):
@@ -68,12 +69,12 @@ class Arena:
 
   def show_stats(self):
     print("\n")
-    print(self.team_one.name + " statistics: ")
+    print(Fore.RED + self.team_one.name + " statistics: ")
     self.team_one.stats()
     print("\n")
-    print(self.team_two.name + " statistics: ")
+    print(Fore.BLUE + self.team_two.name + " statistics: ")
     self.team_two.stats()
-    print("\n")
+    print(Style.RESET_ALL + "\n")
 
     # This is how to calculate the average K/D for Team One
     team_kills = 0
@@ -88,7 +89,6 @@ class Arena:
         team_deaths = 1
     print(self.team_one.name + " average K/D was: " + str(team_kills/team_deaths))
 
-
     team_kills = 0
     team_deaths = 0
     survivors = list()
@@ -99,17 +99,15 @@ class Arena:
         survivors.append(hero.name)
     if team_deaths == 0:
       team_deaths = 1
-    print(self.team_two.name + " average K/D was: " + str(team_kills/team_deaths))
+    print(self.team_two.name + " average K/D was: " + str(team_kills/team_deaths) + "\n")
 
-    # Here is a way to list the heroes from Team One that survived
     for hero in self.team_one.heroes:
-        if hero.deaths == 0:
-            print("survived from " + self.team_one.name + ": " + hero.name)
+      if hero.deaths == 0:
+          print("Survived from " + self.team_one.name + ": " + hero.name)
 
-    #TODO: Now list the heroes from Team Two that survived
     for hero in self.team_two.heroes:
-        if hero.deaths == 0:
-            print("survived from " + self.team_two.name + ": " + hero.name)
+      if hero.deaths == 0:
+          print("Survived from " + self.team_two.name + ": " + hero.name)
 
 
 if __name__ == "__main__":
