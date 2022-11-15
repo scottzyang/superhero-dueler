@@ -11,20 +11,20 @@ class Arena:
 
   def create_ability(self):
     name = input("What is the ability name?  ")
-    max_damage = input(
-      "What is the max damage of the ability?  ")
+    max_damage = int(input(
+      "What is the max damage of the ability?  "))
 
     return Ability(name, max_damage)
 
   def create_weapon(self):
     weapon_name = input("What is the weapon name? ")
-    max_damage = input("What is the max damage of the weapon? ")
+    max_damage = int(input("What is the max damage of the weapon? "))
 
     return Weapon(weapon_name, max_damage)
 
   def create_armor(self):
     armor_name = input("What is the armor name? ")
-    max_block = input("What is the max block of the armor? ")
+    max_block = int(input("What is the max block of the armor? "))
 
     return Armor(armor_name, max_block)
 
@@ -50,17 +50,16 @@ class Arena:
 
     # build_team_one is provided to you
   def build_team_one(self):
-    numOfTeamMembers = int(input("How many members would you like on Team One?\n"))
-    for i in range(numOfTeamMembers):
+    num_team_members = int(input("How many members would you like on Team One?\n"))
+    for i in range(num_team_members):
       hero = self.create_hero()
-      print(hero.name)
       self.team_one.add_hero(hero)
 
   # Now implement build_team_two
   #HINT: If you get stuck, look at how build_team_one is implemented
   def build_team_two(self):
-    numofTeamMembers = int(input("How many members would you like on Team Two?\n"))
-    for i in range(numofTeamMembers):
+    num_team_members = int(input("How many members would you like on Team Two?\n"))
+    for i in range(num_team_members):
       hero = self.create_hero()
       self.team_two.add_hero(hero)
   
@@ -99,21 +98,27 @@ class Arena:
     # This is how to calculate the average K/D for Team One
     team_kills = 0
     team_deaths = 0
+    survivors = list()
     for hero in self.team_one.heroes:
         team_kills += hero.kills
         team_deaths += hero.deaths
+        if hero.is_alive():
+          survivors.append(hero.name)
     if team_deaths == 0:
         team_deaths = 1
     print(self.team_one.name + " average K/D was: " + str(team_kills/team_deaths))
 
 
-    team2_kills = 0
-    team2_deaths = 0
+    team_kills = 0
+    team_deaths = 0
+    survivors = list()
     for hero in self.team_two.heroes:
-      team2_kills += hero.kills
-      team2_deaths += hero.deaths
-    if team2_deaths == 0:
-      team2_deaths = 1
+      team_kills += hero.kills
+      team_deaths += hero.deaths
+      if hero.is_alive():
+        survivors.append(hero.name)
+    if team_deaths == 0:
+      team_deaths = 1
     print(self.team_two.name + " average K/D was: " + str(team_kills/team_deaths))
 
     # Here is a way to list the heroes from Team One that survived
